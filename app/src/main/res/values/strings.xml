@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Tag</string>
+    <string name="title_activity_main">ViTag</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="developers">Developpeurs</string>
+    <string name="title_activity_developpeurs">Developpeurs</string>
+    <string name="tindin">TINDIN !</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="drawer_open">open</string>
+    <string name="drawer_close">close</string>
+    <string name="version">alpha 2</string>
+
+</resources>

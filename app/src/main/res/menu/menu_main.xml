@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="teamone.tag.MainActivity">
+    <!--
+    <item
+        android:id="@+id/tindin"
+        android:orderInCategory="100"
+        android:title="@string/tindin"
+        app:showAsAction="never" />
+    -->
+
+    <item android:id="@+id/developers"
+        android:title="@string/developers"
+        android:orderInCategory="200"
+        android:icon="@drawable/abc_btn_switch_to_on_mtrl_00012"
+        app:showAsAction="always"
+        />
+</menu>

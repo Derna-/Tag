@@ -1,0 +1,35 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_navigation_drawer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/navigationDrawerBG"
+    tools:context="teamone.tag.NavigationDrawerFragment">
+
+    <LinearLayout
+        android:id="@+id/containerDrawerImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FB8C00">
+
+        <ImageView
+
+            android:id="@+id/img"
+            android:layout_width="@dimen/nav_drawer_width"
+            android:layout_height="@dimen/nav_drawer_photo_height"
+            android:layout_marginBottom="@dimen/drawer_image_margin_bottom"
+            android:layout_marginTop="@dimen/drawer_image_margin_top"
+            android:src="@drawable/ic_launcher" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+
+        android:id="@+id/drawerList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/containerDrawerImage">
+
+    </android.support.v7.widget.RecyclerView>
+
+</RelativeLayout>

@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="teamone.tag.Developpeurs">
+    <item
+        android:id="@+id/tindin"
+        android:orderInCategory="100"
+        android:title="@string/tindin"
+        app:showAsAction="never" />
+</menu>

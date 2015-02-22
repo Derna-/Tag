@@ -1,0 +1,2 @@
+include ':app', ':opencv'
+project(':opencv').projectDir = new File('opencv-java-2.4.9/app')
