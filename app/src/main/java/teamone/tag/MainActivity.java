@@ -29,10 +29,10 @@ import org.opencv.imgproc.Imgproc;
 public class MainActivity extends ActionBarActivity implements View.OnClickListener, CameraBridgeViewBase.CvCameraViewListener2 {
 
     private Toolbar toolbar;
-    private static  final  String TAG_BUTTON_ONE = "_buttonOne_";
-    private static  final  String TAG_BUTTON_TWO = "_buttonTwo_";
-    private static  final  String TAG_BUTTON_THREE = "_buttonThree_";
-    private static  final  String TAG_BUTTON_FOUR = "_buttonFour_";
+    private static  final  String TAG_BUTTON_CAMERA = "_buttonCamera_";
+    private static  final  String TAG_BUTTON_IMAGE = "_buttonImage_";
+    private static  final  String TAG_BUTTON_TEXT = "_buttonText_";
+    private static  final  String TAG_BUTTON_SOUND = "_buttonSound_";
     private static  final  String TAG_BASE_LOADER_CALLBACK = "_baseLoaderCallback_";
 
 
@@ -94,10 +94,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         cameraIcon.setImageResource(R.drawable.ic_action_camera);
         ImageView textIcon = new ImageView(this);
         textIcon.setImageResource(R.drawable.ic_action_chat);
-        ImageView soundIco = new ImageView(this);
-        soundIco.setImageResource(R.drawable.ic_action_headphones);
-        ImageView imageIco = new ImageView(this);
-        imageIco.setImageResource(R.drawable.ic_action_picture);
+        ImageView soundIcon = new ImageView(this);
+        soundIcon.setImageResource(R.drawable.ic_action_headphones);
+        ImageView imageIcon = new ImageView(this);
+        imageIcon.setImageResource(R.drawable.ic_action_picture);
 
 
         //setthe background for all the sub buttons
@@ -106,28 +106,28 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
 
         //build the sub buttons
-        SubActionButton button1 = itemBuilder.setContentView(cameraIcon).build();
-        button1.setTag(TAG_BUTTON_ONE);
-        button1.setOnClickListener(this);
-        SubActionButton button2 = itemBuilder.setContentView(imageIco).build();
-        button2.setTag(TAG_BUTTON_TWO);
-        button2.setOnClickListener(this);
-        SubActionButton button3 = itemBuilder.setContentView(textIcon).build();
-        button3.setTag(TAG_BUTTON_THREE);
-        button3.setOnClickListener(this);
-        SubActionButton button4 = itemBuilder.setContentView(soundIco).build();
-        button4.setTag(TAG_BUTTON_FOUR);
-        button4.setOnClickListener(this);
+        SubActionButton cameraIconButton = itemBuilder.setContentView(cameraIcon).build();
+        cameraIconButton.setTag(TAG_BUTTON_CAMERA);
+        cameraIconButton.setOnClickListener(this);
+        SubActionButton imageIcoButton = itemBuilder.setContentView(imageIcon).build();
+        imageIcoButton.setTag(TAG_BUTTON_IMAGE);
+        imageIcoButton.setOnClickListener(this);
+        SubActionButton textIconButton = itemBuilder.setContentView(textIcon).build();
+        textIconButton.setTag(TAG_BUTTON_TEXT);
+        textIconButton.setOnClickListener(this);
+        SubActionButton soundIconButton = itemBuilder.setContentView(soundIcon).build();
+        soundIconButton.setTag(TAG_BUTTON_SOUND);
+        soundIconButton.setOnClickListener(this);
 
 
 
 
         //add sub buttons to the main floating action button
         FloatingActionMenu actionMenu = new FloatingActionMenu.Builder(this)
-                .addSubActionView(button1)
-                .addSubActionView(button2)
-                .addSubActionView(button3)
-                .addSubActionView(button4)
+                .addSubActionView(cameraIconButton)
+                .addSubActionView(imageIcoButton)
+                .addSubActionView(textIconButton)
+                .addSubActionView(soundIconButton)
 
                 .attachTo(rightLowerButton)
                 .build();
@@ -184,16 +184,16 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        if(v.getTag().equals(TAG_BUTTON_ONE)){
+        if(v.getTag().equals(TAG_BUTTON_CAMERA)){
 
         }
-        if(v.getTag().equals(TAG_BUTTON_TWO)){
+        if(v.getTag().equals(TAG_BUTTON_IMAGE)){
 
         }
-        if(v.getTag().equals(TAG_BUTTON_THREE)){
+        if(v.getTag().equals(TAG_BUTTON_TEXT)){
 
         }
-        if(v.getTag().equals(TAG_BUTTON_FOUR)){
+        if(v.getTag().equals(TAG_BUTTON_SOUND)){
 
         }
 
