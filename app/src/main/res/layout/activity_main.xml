@@ -24,15 +24,12 @@
             android:layout_below="@+id/app_bar"
             android:text="@string/version" />
 
-        <org.opencv.android.JavaCameraView
-            android:fitsSystemWindows="true"
-            android:id="@+id/cameraView"
+        <teamone.tag.CameraView
             android:layout_below="@id/textVersion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:visibility="gone"
-            opencv:show_fps="true"
-            opencv:camera_id="any"/>
+            android:id="@+id/activity_java_surface_view"/>
 
     </RelativeLayout>
 

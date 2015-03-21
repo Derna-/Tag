@@ -1,6 +1,36 @@
 package teamone.tag;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.ListIterator;
+
+import org.opencv.android.BaseLoaderCallback;
+import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
+import org.opencv.android.LoaderCallbackInterface;
+import org.opencv.android.OpenCVLoader;
+import org.opencv.core.Mat;
+import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
+
+import android.hardware.Camera.Size;
+import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.SubMenu;
+import android.view.SurfaceView;
+import android.view.View;
+import android.view.View.OnTouchListener;
+import android.view.WindowManager;
+import android.widget.Toast;
+
+
+
 import android.content.Intent;
+import android.hardware.Camera;
+
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -26,7 +56,7 @@ import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 
-public class MainActivity extends ActionBarActivity implements View.OnClickListener, CameraBridgeViewBase.CvCameraViewListener2 {
+public class MainActivity extends ActionBarActivity implements View.OnClickListener, CameraBridgeViewBase.CvCameraViewListener2, View.OnTouchListener {
 
     private Toolbar toolbar;
     private static  final  String TAG_BUTTON_CAMERA = "_buttonCamera_";
@@ -34,9 +64,16 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     private static  final  String TAG_BUTTON_TEXT = "_buttonText_";
     private static  final  String TAG_BUTTON_SOUND = "_buttonSound_";
     private static  final  String TAG_BASE_LOADER_CALLBACK = "_baseLoaderCallback_";
+    private static  final  String TAG_CLASS_CONSTRUCTOR ="_class_MainActivity_";
+    private static  final  String TAG="_app::Activity_";
+    private CameraView mOpenCvCameraView;
+    private List<Size> mResolutionList;
+    private MenuItem[] mResolutionMenuItems;
+    private SubMenu mResolutionMenu;
+
+    //private CameraBridgeViewBase javaCameraView;
 
 
-    private CameraBridgeViewBase javaCameraView;
     private BaseLoaderCallback baseLoaderCallback = new BaseLoaderCallback(this) {
         @Override
         public void onManagerConnected(int status) {
@@ -44,27 +81,36 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 case LoaderCallbackInterface.SUCCESS:
                 {
                     Log.i(TAG_BASE_LOADER_CALLBACK, "OpenCV loaded successfully");
-                    javaCameraView.enableView();
+                    //javaCameraView.enableView();
+                    mOpenCvCameraView.enableView();
+                    mOpenCvCameraView.setOnTouchListener(MainActivity.this);
 
-                }
+                } break;
                 default:
                 {
                     super.onManagerConnected(status);
-                    break;
-                }
+                }  break;
             }
         }
     };
 
+    public MainActivity() {
+        //Log.i(TAG_CLASS_CONSTRUCTOR, "Instantiated new " + this.getClass());
+        //Log.i(TAG_CLASS_CONSTRUCTOR, "Instantiated new " + this.getLocalClassName());
+    }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Log.i(TAG, "called onCreate");
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_main);
 
         toolbar=(Toolbar)findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
+
 
         NavigationDrawerFragment drawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
@@ -72,9 +118,14 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         //build boutton flottant
         buildFAB();
         //opencv cameraview, voir fichier activity_main.xml
-        javaCameraView = (CameraBridgeViewBase) findViewById(R.id.cameraView);
-        javaCameraView.setVisibility(SurfaceView.VISIBLE);
-        javaCameraView.setCvCameraViewListener(this);
+        //javaCameraView = (CameraBridgeViewBase) findViewById(R.id.cameraView);
+        //javaCameraView.setVisibility(SurfaceView.VISIBLE);
+        //javaCameraView.setCvCameraViewListener(this);
+        mOpenCvCameraView = (CameraView) findViewById(R.id.activity_java_surface_view);
+
+        mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
+
+        mOpenCvCameraView.setCvCameraViewListener(this);
 
     }
 
@@ -134,6 +185,18 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     }
 
 
+
+
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        //if (javaCameraView != null)
+        //    javaCameraView.disableView();
+        if (mOpenCvCameraView != null)
+            mOpenCvCameraView.disableView();
+    }
+
     /**
      * Lancer apres que l'activity sera crée mais avant qu'elle sera afficher pour l'utilisateur
      * va servir pour initier la bibliotheque opencv
@@ -142,23 +205,40 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     public void onResume(){
         super.onResume();
         OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_9,this, baseLoaderCallback );
+
     }
 
     /**
-     * sert a desactiver la camera quand l'activty est terminée
+     * sert a desactiver la camera quand l'activity est terminée
      * juste au K.O
      */
     public void onDestroy(){
         super.onDestroy();
-        if (javaCameraView != null) {
-            javaCameraView.disableView();
-        }
+        //if (javaCameraView != null) {
+        //    javaCameraView.disableView();
+        //}
+        if (mOpenCvCameraView != null)
+            mOpenCvCameraView.disableView();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        mResolutionMenu = menu.addSubMenu("Resolution");
+        mResolutionList = mOpenCvCameraView.getResolutionList();
+        mResolutionMenuItems = new MenuItem[mResolutionList.size()];
+
+        ListIterator<Size> resolutionItr = mResolutionList.listIterator();
+        int idx = 0;
+        while(resolutionItr.hasNext()) {
+            Size element = resolutionItr.next();
+            mResolutionMenuItems[idx] = mResolutionMenu.add(2, idx, Menu.NONE,
+                    Integer.valueOf(element.width).toString() + "x" + Integer.valueOf(element.height).toString());
+            idx++;
+        }
+
         return true;
     }
 
@@ -167,6 +247,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+        Log.i(TAG, "called onOptionsItemSelected; selected item: " + item);
+
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -178,6 +260,17 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         if(id==R.id.developers) {
             startActivity(new Intent(this, Developpeurs.class));
         }
+
+        else if (item.getGroupId() == 2)
+        {
+            Size resolution = mResolutionList.get(id);
+           mOpenCvCameraView.setResolution(resolution);
+            resolution = mOpenCvCameraView.getResolution();
+            String caption = Integer.valueOf(resolution.width).toString() + "x" + Integer.valueOf(resolution.height).toString();
+            Toast.makeText(this, caption, Toast.LENGTH_SHORT).show();
+        }
+
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -230,22 +323,37 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
      */
     @Override
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
-        //return inputFrame.rgba();
+        return inputFrame.rgba();
 
         //TODO - a voir, c'est pas terrible
-        Mat mRgba = inputFrame.rgba();
-        Mat mRgbaT = mRgba.t();
-        Core.flip(mRgba.t(), mRgbaT, 1);
-        Imgproc.resize(mRgbaT, mRgbaT, mRgba.size());
-        return mRgbaT;
+        //Mat mRgba = inputFrame.rgba();
+        //Mat mRgbaT = mRgba.t();
+        //Core.flip(mRgba.t(), mRgbaT, 1);
+        //Imgproc.resize(mRgbaT, mRgbaT, mRgba.size());
+        //return mRgbaT;
+        //return mRgbaT;
     }
 
 
+    /**
+     * Called when a touch event is dispatched to a view. This allows listeners to
+     * get a chance to respond before the target view.
+     *
+     * @param v     The view the touch event has been dispatched to.
+     * @param event The MotionEvent object containing full information about
+     *              the event.
+     * @return True if the listener has consumed the event, false otherwise.
+     */
     @Override
-    public void onPause()
-    {
-        super.onPause();
-        if (javaCameraView != null)
-            javaCameraView.disableView();
+    public boolean onTouch(View v, MotionEvent event) {
+        Log.i(TAG,"onTouch event");
+        //Toast.makeText(this, "Screen_TouchEvent", Toast.LENGTH_SHORT).show();
+        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+        //String currentDateandTime = sdf.format(new Date());
+        //String fileName = Environment.getExternalStorageDirectory().getPath() +
+        //        "/sample_picture_" + currentDateandTime + ".jpg";
+        //mOpenCvCameraView.takePicture(fileName);
+        //Toast.makeText(this, fileName + " saved", Toast.LENGTH_SHORT).show();
+        return false;
     }
 }

@@ -80,7 +80,7 @@ public class MyAdapter  extends  RecyclerView.Adapter<MyAdapter.MyViewHolder>{
         @Override
         public void onClick(View v) {
             //DEBUG :
-            // context.startActivity(new Intent(context,Developpeurs.class));v
+            // context.startActivity(new Intent(context,Developpeurs.class));
             // Toast.makeText(context, "Itemclicked at " + getPosition(), Toast.LENGTH_SHORT).show();
             if( clickListener != null)
             {

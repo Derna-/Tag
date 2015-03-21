@@ -8,7 +8,7 @@
         android:orderInCategory="100"
         android:title="@string/tindin"
         app:showAsAction="never" />
-    -->
+-->
 
     <item android:id="@+id/developers"
         android:title="@string/developers"
