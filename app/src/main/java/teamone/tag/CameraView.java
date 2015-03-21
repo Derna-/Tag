@@ -19,6 +19,7 @@ public class CameraView extends JavaCameraView implements PictureCallback {
 
     public CameraView(Context context, AttributeSet attrs) {
         super(context, attrs);
+
     }
 
     public List<String> getEffectList() {
@@ -55,6 +56,7 @@ public class CameraView extends JavaCameraView implements PictureCallback {
         return mCamera.getParameters().getPreviewSize();
     }
 
+
     public void takePicture(final String fileName) {
         Log.i(TAG, "Taking picture");
         this.mPictureFileName = fileName;
@@ -85,4 +87,5 @@ public class CameraView extends JavaCameraView implements PictureCallback {
         }
 
     }
+
 }

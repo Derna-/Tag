@@ -12,6 +12,7 @@ import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Mat;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
 
+import android.content.pm.ActivityInfo;
 import android.hardware.Camera.Size;
 import android.os.Bundle;
 import android.os.Environment;
@@ -107,10 +108,9 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_main);
-
+        //this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         toolbar=(Toolbar)findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
-
 
         NavigationDrawerFragment drawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
@@ -126,6 +126,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
 
         mOpenCvCameraView.setCvCameraViewListener(this);
+
 
     }
 
@@ -225,6 +226,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        // recuperer les résolution possible puis l'afficher
 
         mResolutionMenu = menu.addSubMenu("Resolution");
         mResolutionList = mOpenCvCameraView.getResolutionList();
@@ -264,7 +266,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         else if (item.getGroupId() == 2)
         {
             Size resolution = mResolutionList.get(id);
-           mOpenCvCameraView.setResolution(resolution);
+            mOpenCvCameraView.setResolution(resolution);
             resolution = mOpenCvCameraView.getResolution();
             String caption = Integer.valueOf(resolution.width).toString() + "x" + Integer.valueOf(resolution.height).toString();
             Toast.makeText(this, caption, Toast.LENGTH_SHORT).show();
