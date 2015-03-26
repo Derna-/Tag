@@ -10,6 +10,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="drawer_open">open</string>
     <string name="drawer_close">close</string>
-    <string name="version">alpha 2</string>
+    <string name="version">alpha 3</string>
+    <string name="title_activity_image_process">ImageProcess</string>
+    <string name="action_settings">Settings</string>
+    <string name="photo">photo</string>
 
 </resources>

@@ -9,7 +9,6 @@
         android:title="@string/tindin"
         app:showAsAction="never" />
 -->
-
     <item android:id="@+id/developers"
         android:title="@string/developers"
         android:orderInCategory="200"

@@ -1,7 +1,5 @@
 package teamone.tag;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -10,12 +8,15 @@ import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Mat;
+import org.opencv.core.*;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
 
-import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+
 import android.hardware.Camera.Size;
+
 import android.os.Bundle;
-import android.os.Environment;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,7 +24,7 @@ import android.view.MotionEvent;
 import android.view.SubMenu;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.View.OnTouchListener;
+
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -33,14 +34,10 @@ import android.content.Intent;
 import android.hardware.Camera;
 
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
+
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.SurfaceView;
-import android.view.View;
+
 import android.widget.ImageView;
 import android.widget.Toast;
 //Bouton flottant bas droit
@@ -71,6 +68,14 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     private List<Size> mResolutionList;
     private MenuItem[] mResolutionMenuItems;
     private SubMenu mResolutionMenu;
+    private static final int GRID_SIZE = 4;
+    private static final int GRID_AREA = GRID_SIZE * GRID_SIZE;
+    private Mat[] mCells;
+    private Mat mRgba;
+    private Bitmap mPicture;
+    private CameraView mView;
+
+
 
     //private CameraBridgeViewBase javaCameraView;
 
@@ -94,6 +99,9 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             }
         }
     };
+    private int width;
+    private int height;
+
 
     public MainActivity() {
         //Log.i(TAG_CLASS_CONSTRUCTOR, "Instantiated new " + this.getClass());
@@ -126,6 +134,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
 
         mOpenCvCameraView.setCvCameraViewListener(this);
+
 
 
     }
@@ -230,6 +239,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         mResolutionMenu = menu.addSubMenu("Resolution");
         mResolutionList = mOpenCvCameraView.getResolutionList();
+
+
         mResolutionMenuItems = new MenuItem[mResolutionList.size()];
 
         ListIterator<Size> resolutionItr = mResolutionList.listIterator();
@@ -280,9 +291,14 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if(v.getTag().equals(TAG_BUTTON_CAMERA)){
+        //TODO test sift camera
+            Toast.makeText(this, "avant", Toast.LENGTH_SHORT).show();
+
+            Toast.makeText(this, "apres", Toast.LENGTH_SHORT).show();
 
         }
         if(v.getTag().equals(TAG_BUTTON_IMAGE)){
+            startActivity(new Intent(this, ImageProcess.class));
 
         }
         if(v.getTag().equals(TAG_BUTTON_TEXT)){
@@ -302,6 +318,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
      */
     @Override
     public void onCameraViewStarted(int width, int height) {
+        this.width = width;
+        this.height = height;
 
     }
 
@@ -326,7 +344,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     @Override
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
         return inputFrame.rgba();
-
         //TODO - a voir, c'est pas terrible
         //Mat mRgba = inputFrame.rgba();
         //Mat mRgbaT = mRgba.t();
@@ -358,4 +375,5 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         //Toast.makeText(this, fileName + " saved", Toast.LENGTH_SHORT).show();
         return false;
     }
+
 }
