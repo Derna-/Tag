@@ -106,6 +106,7 @@ public class ImageProcess extends Activity {
                 Toast.makeText(this, "Picture was not taken", Toast.LENGTH_SHORT).show();
             }
         }
+
     }
 
 

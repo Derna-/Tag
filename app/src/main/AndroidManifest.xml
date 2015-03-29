@@ -10,6 +10,7 @@
         android:smallScreens="true" />
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -25,6 +26,7 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -58,6 +60,14 @@
         <activity
             android:name=".ImageProcess"
             android:label="@string/title_activity_image_process" >
+        </activity>
+        <activity
+            android:name=".ImageChooser"
+            android:label="@string/title_activity_image_chooser" >
+        </activity>
+        <activity
+            android:name=".ViewImage"
+            android:label="@string/title_activity_view_image" >
         </activity>
     </application>
 

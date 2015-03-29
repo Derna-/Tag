@@ -26,6 +26,7 @@ import android.view.SurfaceView;
 import android.view.View;
 
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -134,6 +135,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
 
         mOpenCvCameraView.setCvCameraViewListener(this);
+
+        final TextView textViewToChange = (TextView) findViewById(R.id.textVersion);
+        textViewToChange.setText(
+                "alpha 3 E" );
 
 
 
@@ -293,13 +298,11 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         if(v.getTag().equals(TAG_BUTTON_CAMERA)){
         //TODO test sift camera
             Toast.makeText(this, "avant", Toast.LENGTH_SHORT).show();
-
+            startActivity(new Intent(this, ImageProcess.class));
             Toast.makeText(this, "apres", Toast.LENGTH_SHORT).show();
-
         }
         if(v.getTag().equals(TAG_BUTTON_IMAGE)){
-            startActivity(new Intent(this, ImageProcess.class));
-
+            startActivity(new Intent(this, ImageChooser.class));
         }
         if(v.getTag().equals(TAG_BUTTON_TEXT)){
 
