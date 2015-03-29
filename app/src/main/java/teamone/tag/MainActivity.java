@@ -1,22 +1,12 @@
 package teamone.tag;
 
-import java.util.List;
-import java.util.ListIterator;
-
-import org.opencv.android.BaseLoaderCallback;
-import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
-import org.opencv.android.LoaderCallbackInterface;
-import org.opencv.android.OpenCVLoader;
-import org.opencv.core.Mat;
-import org.opencv.core.*;
-import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
-
+import android.content.Intent;
 import android.graphics.Bitmap;
-
 import android.hardware.Camera.Size;
-
 import android.os.Bundle;
-
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,36 +14,26 @@ import android.view.MotionEvent;
 import android.view.SubMenu;
 import android.view.SurfaceView;
 import android.view.View;
-
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-
-import android.content.Intent;
-import android.hardware.Camera;
-
-import android.support.v7.app.ActionBarActivity;
-
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.Toolbar;
-
-import android.widget.ImageView;
-import android.widget.Toast;
-//Bouton flottant bas droit
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
-//Computer Vision Library
-import org.opencv.android.BaseLoaderCallback; //Listener Object
+
+import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
-import org.opencv.android.JavaCameraView;     //Camera Handler
 import org.opencv.android.LoaderCallbackInterface;
-import org.opencv.android.OpenCVLoader;       //Bind OpenCV to Activity
-import org.opencv.core.Core;
+import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
+
+import java.util.List;
+import java.util.ListIterator;
+
+//Bouton flottant bas droit
+//Computer Vision Library
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener, CameraBridgeViewBase.CvCameraViewListener2, View.OnTouchListener {
 
@@ -76,10 +56,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     private Bitmap mPicture;
     private CameraView mView;
 
-
-
     //private CameraBridgeViewBase javaCameraView;
-
 
     private BaseLoaderCallback baseLoaderCallback = new BaseLoaderCallback(this) {
         @Override
@@ -108,7 +85,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         //Log.i(TAG_CLASS_CONSTRUCTOR, "Instantiated new " + this.getClass());
         //Log.i(TAG_CLASS_CONSTRUCTOR, "Instantiated new " + this.getLocalClassName());
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,9 +115,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         final TextView textViewToChange = (TextView) findViewById(R.id.textVersion);
         textViewToChange.setText(
                 "alpha 3 E" );
-
-
-
     }
 
     /**
@@ -296,7 +269,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if(v.getTag().equals(TAG_BUTTON_CAMERA)){
-        //TODO test sift camera
+            //TODO test sift camera
             Toast.makeText(this, "avant", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, ImageProcess.class));
             Toast.makeText(this, "apres", Toast.LENGTH_SHORT).show();
@@ -356,7 +329,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         //return mRgbaT;
     }
 
-
     /**
      * Called when a touch event is dispatched to a view. This allows listeners to
      * get a chance to respond before the target view.
@@ -378,5 +350,4 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         //Toast.makeText(this, fileName + " saved", Toast.LENGTH_SHORT).show();
         return false;
     }
-
 }
