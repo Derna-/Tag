@@ -281,7 +281,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         }
         if(v.getTag().equals(TAG_BUTTON_SOUND)){
-
+            startActivity(new Intent(this, MapView.class));
         }
 
     }

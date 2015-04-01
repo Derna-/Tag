@@ -30,8 +30,7 @@ public class ImageChooser extends ActionBarActivity {
         setContentView(R.layout.gridview_main);
         Toolbar toolbar=(Toolbar)findViewById(R.id.app_bar_gridview);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         // Check for SD Card
         if (!Environment.getExternalStorageState().equals(

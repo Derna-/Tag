@@ -16,5 +16,6 @@
     <string name="photo">photo</string>
     <string name="title_activity_image_chooser">ImageChooser</string>
     <string name="title_activity_view_image">Algorithme</string>
+    <string name="title_activity_map_view">MapView</string>
 
 </resources>

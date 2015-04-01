@@ -17,6 +17,7 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 import mpi.cbg.fly.Feature;
@@ -43,8 +44,6 @@ public class ViewImage extends ActionBarActivity {
 
         Toolbar toolbar=(Toolbar)findViewById(R.id.app_bar_view_image);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		// Retrieve data from MainActivity on GridView item click
 		Intent i = getIntent();
@@ -69,6 +68,8 @@ public class ViewImage extends ActionBarActivity {
 
 		// Decode the filepath with BitmapFactory followed by the position
 		Bitmap bmp = BitmapFactory.decodeFile(filepath[position]);
+
+
 
         //sift
             // Free the data of the last picture
@@ -108,8 +109,9 @@ public class ViewImage extends ActionBarActivity {
                     Vector<Feature> features = SIFT.getFeatures(
                             mPicture.getWidth(), mPicture.getHeight(), pixels);
                     Bitmap orig = mPicture;
-                    //TODO  Immutable bitmap crash sinon
+                    // Immutable bitmap crash sinon - vu que les couleur sous android sans en ARGB et non pas RGB
                     mPicture = mPicture.copy(Bitmap.Config.ARGB_8888, true);
+
 
                     // draw features on bitmap
                     Canvas c = new Canvas(mPicture);
