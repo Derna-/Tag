@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/FloatingPoint/FloatingButton.iml" filepath="$PROJECT_DIR$/FloatingPoint/FloatingButton.iml" />
       <module fileurl="file://$PROJECT_DIR$/Tag.iml" filepath="$PROJECT_DIR$/Tag.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/opencv-java-2.4.9/app/opencv.iml" filepath="$PROJECT_DIR$/opencv-java-2.4.9/app/opencv.iml" />
